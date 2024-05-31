@@ -1,0 +1,16 @@
+{
+  "max_parallel_workers": 5,
+  "top_pct_take": 10,
+  "nasdaq_url": "https://api.nasdaq.com/api/screener/stocks?tableonly=true&limit=25&exchange=NASDAQ&download=true",
+  "nyse_url": "https://api.nasdaq.com/api/screener/stocks?tableonly=true&limit=25&exchange=NYSE&download=true",
+  "fetch_period": "max",
+  "filter_industries": [
+    "Biotechnology"
+  ],
+  "ignore_tickers": [
+    "BAC^L", "MTB^J"
+  ],
+  "dollar_volume_threshold": 8000000,
+  "price_threshold": 4,
+  "adr_threshold": 3
+}
