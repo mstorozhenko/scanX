@@ -38,7 +38,7 @@ class MomentumScan:
 
         sorted_prices = sorted(prices.items(), key=lambda x: x[1][1], reverse=True)
 
-        top_percent_index = max(1, len(sorted_prices) // self.config.top_pct_take)
+        top_percent_index = int(max(1, len(sorted_prices) * (self.config.top_pct_take / 100)))
         top_tickers = sorted_prices[:top_percent_index]
 
         return top_tickers

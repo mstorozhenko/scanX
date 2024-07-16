@@ -11,6 +11,6 @@
     "BAC^L", "MTB^J"
   ],
   "dollar_volume_threshold": 8000000,
-  "price_threshold": 4,
+  "price_threshold": 5,
   "adr_threshold": 3
 }
