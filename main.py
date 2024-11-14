@@ -7,8 +7,11 @@ from config.config import Config
 from console.console import animated_indicator
 import threading
 import sys
+import time
 
 if __name__ == "__main__":
+    start_time = time.time()
+
     config = Config('./config/config.json')
     tickers = Universe.build_universe(config)
 
@@ -49,3 +52,5 @@ if __name__ == "__main__":
         indicator_thread.join()
         sys.stdout.write('\rDone!           \n')
         sys.stdout.flush()
+
+        print("--- %s minutes ---" % ((time.time() - start_time) / 60))

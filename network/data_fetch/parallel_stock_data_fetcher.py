@@ -1,6 +1,7 @@
 import yfinance as yf
 import concurrent.futures
 from util.adr import Adr
+import time
 
 
 class ParallelStockDataFetcher:
@@ -13,6 +14,7 @@ class ParallelStockDataFetcher:
             stock = yf.Ticker(ticker)
             stock_history = stock.history(period=period).iloc[::-1]
             stock_info = stock.info
+            time.sleep(0.3) # fix Too many requests
             adr = Adr.calculate_adr(stock_history)
             return ticker, stock_history, stock_info, adr
         except Exception as e:
