@@ -2,6 +2,15 @@ import yfinance as yf
 import concurrent.futures
 from util.adr import Adr
 import time
+import requests_cache
+from requests import Session, session
+from requests_cache import CacheMixin, SQLiteCache
+from requests_ratelimiter import LimiterMixin, MemoryQueueBucket
+from pyrate_limiter import Duration, RequestRate, Limiter
+
+
+class CachedLimiterSession(CacheMixin, LimiterMixin, Session):
+    pass
 
 
 class ParallelStockDataFetcher:
@@ -11,10 +20,16 @@ class ParallelStockDataFetcher:
     @staticmethod
     def fetch_data_for_ticker(ticker, period):
         try:
-            stock = yf.Ticker(ticker)
+            # session = requests_cache.CachedSession('yfinance.cache')
+            session = CachedLimiterSession(
+                limiter=Limiter(RequestRate(2, Duration.SECOND)),
+                bucket_class=MemoryQueueBucket,
+                backend=SQLiteCache("yfinance.cache"),
+            )
+            session.headers['User-agent'] = 'scanX/1.0'
+            stock = yf.Ticker(ticker, session=session)
             stock_history = stock.history(period=period).iloc[::-1]
             stock_info = stock.info
-            time.sleep(0.3) # fix Too many requests
             adr = Adr.calculate_adr(stock_history)
             return ticker, stock_history, stock_info, adr
         except Exception as e:

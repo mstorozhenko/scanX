@@ -8,7 +8,7 @@
     "Biotechnology"
   ],
   "ignore_tickers": [
-    "BAC^L", "MTB^J", "BA^A"
+    "BAC^L", "MTB^J", "BA^A", "ARES^B", "GTLS^B", "NEE^S", "PCG^X", "APO^A"
   ],
   "dollar_volume_threshold": 8000000,
   "price_threshold": 5,
