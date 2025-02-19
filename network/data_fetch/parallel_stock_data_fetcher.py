@@ -25,7 +25,9 @@ class ParallelStockDataFetcher:
                 limiter=Limiter(RequestRate(2, Duration.SECOND)),
                 bucket_class=MemoryQueueBucket,
                 backend=SQLiteCache("yfinance.cache"),
+                expire_after=36000 # 10h
             )
+            session.cache.delete(expired=True)
             session.headers['User-agent'] = 'scanX/1.0'
             stock = yf.Ticker(ticker, session=session)
             stock_history = stock.history(period=period).iloc[::-1]
