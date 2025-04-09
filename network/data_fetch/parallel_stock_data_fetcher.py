@@ -20,7 +20,9 @@ class ParallelStockDataFetcher:
     @staticmethod
     def fetch_data_for_ticker(ticker, period, cached_session):
         try:
-            stock = yf.Ticker(ticker, session=cached_session)
+            print(f"Fetching {ticker}")
+            # stock = yf.Ticker(ticker, session=cached_session)
+            stock = yf.Ticker(ticker)
             stock_history = stock.history(period=period).iloc[::-1]
             stock_info = stock.info
             adr = Adr.calculate_adr(stock_history)
